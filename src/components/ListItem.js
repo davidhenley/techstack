@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { CardSection } from './common';
 import { Text, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 class ListItem extends Component {
   render() {
@@ -23,4 +25,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ListItem;
+const mapStateToProps = ({ selected }) => {
+  return { selected };
+};
+
+export default connect(mapStateToProps, actions)(ListItem);
