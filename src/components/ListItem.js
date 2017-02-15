@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import { CardSection } from './common';
-import { Text, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+  LayoutAnimation
+} from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class ListItem extends Component {
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut();
+  }
+
   render() {
     const { id, title, description } = this.props.library;
-    const { titleStyle } = styles;
+    const { titleStyle, descStyle } = styles;
 
     return (
       <TouchableWithoutFeedback onPress={() => this.props.selectLibrary(id)}>
@@ -17,7 +27,10 @@ class ListItem extends Component {
               {title}
             </Text>
           </CardSection>
-          {this.props.expanded && <Text>{description}</Text>}
+          {this.props.expanded &&
+            <CardSection>
+              <Text style={[descStyle]}>{description}</Text>
+            </CardSection>}
         </View>
       </TouchableWithoutFeedback>
     );
@@ -28,6 +41,11 @@ const styles = StyleSheet.create({
   titleStyle: {
     fontSize: 18,
     paddingLeft: 15
+  },
+  descStyle: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15
   }
 });
 
